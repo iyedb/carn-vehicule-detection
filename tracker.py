@@ -102,7 +102,7 @@ def draw_labeled_bboxes(img, labels):
         # Define a bounding box based on min/max x and y
         bbox = ((np.min(nonzerox), np.min(nonzeroy)), (np.max(nonzerox), np.max(nonzeroy)))
         # Draw the box on the image
-        cv2.rectangle(img, bbox[0], bbox[1], (0,255,0), 6)
+        cv2.rectangle(img, bbox[0], bbox[1], (0, 255, 0), 6)
     # Return the image
     return img
 
@@ -113,7 +113,7 @@ threshold = 1
 
 
 class Tracker:
-    def __init__(self, config, ystart=400, ystop=656, scale=1.5, threshold=2):
+    def __init__(self, config, ystart=400, ystop=656, scale=1.5, threshold=15):
         self.svc = config["svc"]
         self.X_scaler = config["scaler"]
         self.orient = config["orient"]
@@ -125,7 +125,7 @@ class Tracker:
         self.ystop = ystop
         self.scale = scale
         self.threshold = threshold
-        self.boxes = collections.deque(maxlen=1)
+        self.boxes = collections.deque(maxlen=15)
 
     def processframe(self, frame):
         bboxes = find_cars(
@@ -141,9 +141,13 @@ class Tracker:
             self.spatial_size,
             self.hist_bins,
         )
+        self.boxes.append(bboxes)
+        box_list = []
+        for e in self.boxes:
+            box_list += e
 
         heat_map = np.zeros_like(frame[:, :, 0]).astype(np.float)
-        heat_map = add_heat(heat_map, bboxes)
+        heat_map = add_heat(heat_map, box_list)
 
         heat_map = apply_threshold(heat_map, self.threshold)
         labels = scipylabel(heat_map)
