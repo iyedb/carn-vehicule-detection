@@ -1,9 +1,6 @@
-##Writeup Template
-###You can use this file as a template for your writeup if you want to submit it as a markdown file, but feel free to use some other method and submit a pdf if you prefer.
-
----
-
 **Vehicle Detection Project**
+
+[![Vehicle Detection Video](https://img.youtube.com/vi/C0Za5ppvBZw/0.jpg)](https://www.youtube.com/watch?v=C0Za5ppvBZw)
 
 [image1]: ./output_images/car-not-car.png
 [image2]: ./output_images/car-hog-viz.png
@@ -41,11 +38,11 @@ Below is an image of a car along with the hog algorithm visualization:
 
 #### 2. Final choice of HOG parameters.
 
-I tried various combinations of parameters and the ones that I retained allowed the classfier used later to perform very well on the test dataset. I guess the kind of images of this application 8 gradient orientations where enough to capture the signature of the shape of a car and distinguish cars from non cars objects. indeed, using more orientations did not help improve the classifier accuracy.
+I tried various combinations of parameters and the ones that I kept allowed the classfier used later to perform very well on the test dataset. I guess for the kind of images of this application, 8 gradient orientations where enough to capture the signature of the shape of a car and distinguish cars from non cars objects. indeed, using more orientations did not help improve the classifier accuracy.
 
 #### 3. Describe how (and identify where in your code) you trained a classifier using your selected HOG features (and color features if you used them).
 
-I trained a linear SVM using as show in the classifier.ipynb notebook. I used 0.8 and of the dataset for training the SVM and the remaining data samples to test the accurary which was high at 0.9924.
+I trained a linear SVM using as shown in the classifier.ipynb notebook. I used 0.8 and of the dataset for training the SVM and the remaining data samples to test the accurary which was high at 0.9924.
 
 ### Sliding Window Search
 
