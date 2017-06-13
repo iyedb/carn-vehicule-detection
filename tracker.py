@@ -5,7 +5,6 @@ from scipy.ndimage.measurements import label as scipylabel
 import collections
 
 
-
 def find_cars(img, ystart, ystop, scale, svc, X_scaler, orient, pix_per_cell, cell_per_block, spatial_size, hist_bins, img_type='jpg'):
     # draw_img = np.copy(img)
     if img_type == 'jpg':
@@ -76,6 +75,7 @@ def find_cars(img, ystart, ystop, scale, svc, X_scaler, orient, pix_per_cell, ce
                 bbox_list.append(bbox)
     return bbox_list
 
+
 def add_heat(heatmap, bbox_list):
     for box in bbox_list:
         # Add += 1 for all pixels inside each bbox
@@ -85,11 +85,13 @@ def add_heat(heatmap, bbox_list):
     # Return updated heatmap
     return heatmap# Iterate through list of bboxes
 
+
 def apply_threshold(heatmap, threshold):
     # Zero out pixels below the threshold
     heatmap[heatmap <= threshold] = 0
     # Return thresholded map
     return heatmap
+
 
 def draw_labeled_bboxes(img, labels):
     # Iterate through all detected cars
@@ -105,11 +107,6 @@ def draw_labeled_bboxes(img, labels):
         cv2.rectangle(img, bbox[0], bbox[1], (0, 255, 0), 6)
     # Return the image
     return img
-
-ystart = 400
-ystop = 656
-scale = 1.5
-threshold = 1
 
 
 class Tracker:
