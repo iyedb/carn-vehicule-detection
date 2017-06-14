@@ -9,6 +9,8 @@
 [image5]: ./examples/bboxes_and_heat.png
 [image6]: ./examples/labels_map.png
 [image7]: ./examples/output_bboxes.png
+[image8]: ./output_images/subimg_47_0.png
+[image9]: ./output_images/subimg_44_1.png
 [video1]: ./project_video.mp4
 
 ---
@@ -47,10 +49,11 @@ I trained a linear SVM using as shown in the classifier.ipynb notebook. I used 0
 ### Sliding Window Search
 
 #### 1. Describe how (and identify where in your code) you implemented a sliding window search.  How did you decide what scales to search and how much to overlap windows?
+The sliding window search is performed over a region of the image where it is most likely to find cars. That region is scaled down with a 1.5 scale factor. Since I did not vary the window size which is 64 pixels, scaling down at 1.5 seems to be reasonale choice to get a window of size 64 pixels to contain enough information (should it contain a car or part of it) to be classied correctly. The windows also have a 75% overlap. There is a tradeoff between the window size and the overlapping. 64 pixels and 75% overlapping seemed to work well in hindsight as there was very few false positive in classification.
+below are some windows (image patches extracted with the algorithm)
 
-I decided to search random window positions at random scales all over the image and came up with this (ok just kidding I didn't actually ;):
-
-![alt text][image3]
+![alt text][image8]
+![alt text][image9]
 
 #### 2. Show some examples of test images to demonstrate how your pipeline is working.  What did you do to optimize the performance of your classifier?
 
@@ -89,5 +92,5 @@ Here's an example result showing the heatmap from a series of frames of video, t
 
 #### 1. Briefly discuss any problems / issues you faced in your implementation of this project.  Where will your pipeline likely fail?  What could you do to make it more robust?
 
-Here I'll talk about the approach I took, what techniques I used, what worked and why, where the pipeline might fail and how I might improve it if I were going to pursue this project further.
-
+The most tricky part actually was to choose the right heatmap theshold and right buffer size for the number of frame to consider when thresholding the heatmap to find the bounding boxes around cars. To low of a threshold and classification false positives where not eliminated and to high a threshold cars where not tracked correctly. Obviously the higher the threshold the bigger is the number of frames to buffer. The speed of the algorithm is also very unsatifying at about 3 frames per second so as it is, it's not useful for a real application.
+I would be interesting to replace the SVM algorithm used here with a convolutinal neural network
